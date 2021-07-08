@@ -1,6 +1,6 @@
 package com.liqiwen.media.listener;
 
-import com.liqiwen.media.util.ProcessUtils;
+import com.liqiwen.media.util.ProcessUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -29,7 +29,7 @@ public class ExtractMetadataListener implements ActionListener {
         System.out.println("click url：" + text);
 //        String s = ProcessUtils.extractMetadata(text);
 
-        String s = ProcessUtils.extractMetadataWithFfprobe(text);
+        String s = ProcessUtil.extractMetadataWithFfprobe(text);
 
     }
 }

@@ -16,6 +16,9 @@ import java.util.Arrays;
  */
 public class MainUi {
 
+
+    private final Font font = new Font(null, Font.PLAIN, 16);
+
     public static void main(String[] args) {
         //创建事件调度线程
         SwingUtilities.invokeLater(() -> {
@@ -38,9 +41,9 @@ public class MainUi {
         //创建选项卡面板
         final JTabbedPane tabbedPane = new JTabbedPane();
 
-        tabbedPane.add("video", createVideoProcessPanel());
-        tabbedPane.add("image", createImageProcessPanel());
-        tabbedPane.add("download", createResourceDownloadPanel());
+        tabbedPane.add("视频压制", createVideoProcessPanel());
+        tabbedPane.add("图片处理", createImageProcessPanel());
+        tabbedPane.add("资源下载", createResourceDownloadPanel());
 
         tabbedPane.addChangeListener(e -> System.out.println("current selected " + tabbedPane.getSelectedIndex()));
 
@@ -77,9 +80,55 @@ public class MainUi {
         videoProcessPanel.setTopComponent(splitPane);
 
 
+        JSplitPane bottomSplitPane = new JSplitPane();
+
+
+
+
+        //=======================进程完整指令输出 ===========================
+        JPanel jPanel = new JPanel(new GridLayout(2, 1));
+        JLabel jLabel = new JLabel("完整指令");
+        jLabel.setFont(font);
+        jPanel.add(jLabel);
+
         //bottom
-        JScrollPane jScrollPane = new JScrollPane();
-        videoProcessPanel.setBottomComponent(jScrollPane);
+        // 创建文本组件区域
+        JTextArea outputLogTextArea = new JTextArea();
+        //设置自动换行
+        outputLogTextArea.setLineWrap(true);
+        //设置字体
+        outputLogTextArea.setFont(font);
+        JScrollPane jScrollPane = new JScrollPane(outputLogTextArea,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jPanel.add(jScrollPane);
+
+        bottomSplitPane.setTopComponent(jPanel);
+
+        //=======================进程完整指令输出结束 ===========================
+
+
+        //=======================进程执行结果输出 ===========================
+        JPanel processOutputResultPanel = new JPanel(new GridLayout(2, 1));
+        JLabel processOutputLabel = new JLabel("输出结果");
+        processOutputLabel.setFont(font);
+        processOutputResultPanel.add(processOutputLabel);
+        // 创建文本组件区域
+        JTextArea processOutputResult = new JTextArea();
+        //设置自动换行
+        outputLogTextArea.setLineWrap(true);
+        //设置字体
+        outputLogTextArea.setFont(font);
+        JScrollPane processOutputResultPane = new JScrollPane(processOutputResult,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        processOutputResultPanel.add(processOutputResultPane);
+        bottomSplitPane.setBottomComponent(processOutputResultPanel);
+        //=======================进程执行结果输出结束 ===========================
+
+
+
+        videoProcessPanel.setBottomComponent(bottomSplitPane);
 
 
         //left
